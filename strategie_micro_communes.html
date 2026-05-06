@@ -1,0 +1,333 @@
+
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+.nav { display: flex; gap: 6px; flex-wrap: wrap; padding: 0 0 16px; border-bottom: 0.5px solid var(--color-border-tertiary); margin-bottom: 20px; }
+.tab { background: transparent; border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-md); padding: 7px 14px; font-size: 13px; color: var(--color-text-secondary); cursor: pointer; display: flex; align-items: center; gap: 6px; transition: all .15s; }
+.tab:hover { background: var(--color-background-secondary); }
+.tab.active { background: var(--color-background-primary); border-color: var(--color-border-primary); color: var(--color-text-primary); font-weight: 500; }
+.section { display: none; }
+.section.active { display: block; }
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 14px; }
+.grid3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; margin-bottom: 14px; }
+.card { background: var(--color-background-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); padding: 16px; margin-bottom: 12px; }
+.card.featured { border: 2px solid #1D9E75; }
+.card.info-l { border-left: 3px solid #3B8BD4; border-radius: 0 var(--border-radius-lg) var(--border-radius-lg) 0; }
+.card.warn-l { border-left: 3px solid #BA7517; border-radius: 0 var(--border-radius-lg) var(--border-radius-lg) 0; }
+.card.green-l { border-left: 3px solid #1D9E75; border-radius: 0 var(--border-radius-lg) var(--border-radius-lg) 0; }
+.metric { background: var(--color-background-secondary); border-radius: var(--border-radius-md); padding: 14px 16px; }
+.metric .label { font-size: 12px; color: var(--color-text-secondary); margin-bottom: 4px; }
+.metric .value { font-size: 22px; font-weight: 500; color: var(--color-text-primary); }
+.metric .sub { font-size: 11px; color: var(--color-text-tertiary); margin-top: 2px; }
+.badge { display: inline-flex; align-items: center; gap: 4px; font-size: 11px; padding: 3px 8px; border-radius: 20px; font-weight: 500; }
+.badge.blue { background: #E6F1FB; color: #0C447C; }
+.badge.green { background: #EAF3DE; color: #3B6D11; }
+.badge.amber { background: #FAEEDA; color: #854F0B; }
+.badge.red { background: #FCEBEB; color: #A32D2D; }
+.badge.purple { background: #EEEDFE; color: #3C3489; }
+.badge.teal { background: #E1F5EE; color: #085041; }
+.badge.coral { background: #FAECE7; color: #993C1D; }
+h3 { font-size: 15px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 10px; }
+h4 { font-size: 13px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 6px; }
+p, li { font-size: 13px; color: var(--color-text-secondary); line-height: 1.6; }
+ul { padding-left: 16px; }
+li { margin-bottom: 4px; }
+.tag-row { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+.price-big { font-size: 28px; font-weight: 500; color: var(--color-text-primary); }
+.price-sub { font-size: 12px; color: var(--color-text-tertiary); }
+.callout { background: var(--color-background-secondary); border-radius: var(--border-radius-md); padding: 12px 14px; margin-top: 10px; font-size: 13px; color: var(--color-text-secondary); line-height: 1.6; }
+.row { display: flex; gap: 10px; align-items: flex-start; margin-bottom: 10px; }
+.icon-box { width: 34px; height: 34px; border-radius: var(--border-radius-md); display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+.icon-box.green { background: #EAF3DE; color: #3B6D11; }
+.icon-box.blue { background: #E6F1FB; color: #185FA5; }
+.icon-box.amber { background: #FAEEDA; color: #854F0B; }
+.icon-box.purple { background: #EEEDFE; color: #3C3489; }
+.icon-box.teal { background: #E1F5EE; color: #0F6E56; }
+.icon-box.coral { background: #FAECE7; color: #993C1D; }
+.step { display: flex; gap: 10px; margin-bottom: 12px; align-items: flex-start; }
+.step-num { width: 26px; height: 26px; border-radius: 50%; background: var(--color-background-secondary); border: 0.5px solid var(--color-border-secondary); display: flex; align-items: center; justify-content: center; font-size: 11px; font-weight: 500; flex-shrink: 0; }
+.step-num.on { background: #E1F5EE; color: #085041; border-color: #1D9E75; }
+.hr { border: none; border-top: 0.5px solid var(--color-border-tertiary); margin: 14px 0; }
+.table { width: 100%; border-collapse: collapse; font-size: 12px; }
+.table th { text-align: left; padding: 8px 10px; background: var(--color-background-secondary); color: var(--color-text-secondary); font-weight: 500; font-size: 11px; }
+.table td { padding: 8px 10px; border-bottom: 0.5px solid var(--color-border-tertiary); color: var(--color-text-primary); }
+.table tr:last-child td { border-bottom: none; }
+.highlight-box { background: #E1F5EE; border: 0.5px solid #1D9E75; border-radius: var(--border-radius-lg); padding: 16px; margin-bottom: 14px; }
+.highlight-box h3 { color: #085041; }
+.highlight-box p { color: #0F6E56; }
+.sim-row { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; }
+.sim-label { font-size: 12px; color: var(--color-text-secondary); width: 180px; flex-shrink: 0; }
+.sim-val { font-size: 14px; font-weight: 500; color: var(--color-text-primary); min-width: 80px; }
+.bar-bg { flex: 1; height: 8px; background: var(--color-background-secondary); border-radius: 4px; }
+.bar-fill { height: 8px; border-radius: 4px; background: #1D9E75; transition: width .5s; }
+</style>
+
+<div style="padding: 4px 0 20px;">
+  <div style="margin-bottom: 18px;">
+    <div style="font-size: 18px; font-weight: 500; color: var(--color-text-primary); margin-bottom: 4px;">Stratégie micro-communes & hameaux</div>
+    <div style="font-size: 13px; color: var(--color-text-secondary);">26 000 communes &lt; 500 hab · Marché sous-servi · Modèle EPCI = multiplicateur</div>
+  </div>
+
+  <div class="nav">
+    <button class="tab active" onclick="show('marche')"><i class="ti ti-map" aria-hidden="true"></i> Marché</button>
+    <button class="tab" onclick="show('tarif')"><i class="ti ti-tag" aria-hidden="true"></i> Grille tarifaire</button>
+    <button class="tab" onclick="show('epci')"><i class="ti ti-building-community" aria-hidden="true"></i> Stratégie EPCI</button>
+    <button class="tab" onclick="show('ux')"><i class="ti ti-device-mobile" aria-hidden="true"></i> UX Maire rural</button>
+    <button class="tab" onclick="show('simu')"><i class="ti ti-calculator" aria-hidden="true"></i> Simulateur ARR</button>
+  </div>
+
+  <!-- MARCHE -->
+  <div id="s-marche" class="section active">
+    <div class="highlight-box">
+      <h3>🎯 Votre niche est en réalité un marché de masse</h3>
+      <p>26 000 communes &lt; 500 hab = 70% des communes françaises · Quasi aucun concurrent sérieux · Budget mairie modeste mais décision du maire SEUL · Potentiel 17M€ ARR si 1% de pénétration</p>
+    </div>
+    <div class="grid3">
+      <div class="metric"><div class="label">Communes cibles FR</div><div class="value">~26 000</div><div class="sub">&lt; 500 habitants</div></div>
+      <div class="metric"><div class="label">ARR potentiel total</div><div class="value">~18 M€</div><div class="sub">à 690€/an × 26 000</div></div>
+      <div class="metric"><div class="label">Seuil délibération</div><div class="value">500€</div><div class="sub">Sous ce seuil : maire décide seul</div></div>
+    </div>
+    <div class="grid2">
+      <div class="card warn-l">
+        <h4><i class="ti ti-alert-triangle" aria-hidden="true"></i> Problème : 690€ dépasse le seuil</h4>
+        <p>Au-dessus de ~500€, certaines communes doivent passer par une délibération du conseil municipal. Cela allonge le cycle de 2 à 6 mois et tue les conversions spontanées.</p>
+        <div class="callout">
+          <strong>Solution :</strong> proposer 490€/an (sous le seuil) + option premium à 690€ avec modules supplémentaires. Ou fractionner : 390€ licence + 199€ setup = deux lignes séparées.
+        </div>
+      </div>
+      <div class="card green-l">
+        <h4><i class="ti ti-trending-up" aria-hidden="true"></i> Opportunité : le maire décide seul</h4>
+        <p>Dans les communes &lt; 200 hab, le maire a souvent une enveloppe discrétionnaire. Si votre prix passe sous 500€, la signature peut se faire en 48h après démo — sans conseil municipal.</p>
+        <div class="callout">
+          <strong>Cycle de vente cible :</strong> démo 20 min sur smartphone → lien Stripe → commune active en &lt; 1 heure.
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <h3>Profil du décideur : le maire d'un hameau</h3>
+      <div class="grid2" style="margin-top:10px; margin-bottom:0;">
+        <div>
+          <div class="row"><div class="icon-box amber"><i class="ti ti-user" aria-hidden="true"></i></div><div><h4>Qui est-il ?</h4><p>Retraité, agriculteur ou artisan · bénévole · smartphone Android basique · pas de formation informatique · décide seul mais sollicite ses pairs</p></div></div>
+          <div class="row"><div class="icon-box coral"><i class="ti ti-clock" aria-hidden="true"></i></div><div><h4>Son temps</h4><p>30 min max pour tester un outil · réfractaire aux formations · veut que ça marche "comme WhatsApp"</p></div></div>
+        </div>
+        <div>
+          <div class="row"><div class="icon-box teal"><i class="ti ti-heart" aria-hidden="true"></i></div><div><h4>Ses motivations</h4><p>Informer ses administrés facilement · être joignable · moderniser l'image du village · réduire les affichages papier</p></div></div>
+          <div class="row"><div class="icon-box purple"><i class="ti ti-shield" aria-hidden="true"></i></div><div><h4>Ses peurs</h4><p>Engagement long terme · complexité · données personnelles citoyens · coût imprévisible</p></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- TARIF -->
+  <div id="s-tarif" class="section">
+    <div class="grid3">
+      <div class="card">
+        <div class="tag-row"><span class="badge teal">Essentiel</span></div>
+        <div style="margin: 12px 0 4px;"><span class="price-big">490€</span><span class="price-sub"> /an HT</span></div>
+        <p style="font-size:11px; color:var(--color-text-tertiary); margin-bottom:12px;">Sous le seuil de délibération · décision maire seul</p>
+        <ul>
+          <li>Fil d'infos mairie</li>
+          <li>Notifications push citoyens</li>
+          <li>Alertes urgences</li>
+          <li>Page mairie + contacts</li>
+          <li>Jusqu'à 500 habitants</li>
+          <li>Support email 48h</li>
+        </ul>
+        <div class="tag-row"><span class="badge green">Conversion max</span></div>
+      </div>
+      <div class="card featured">
+        <div class="tag-row"><span class="badge green">⭐ Recommandé</span><span class="badge teal">Pro</span></div>
+        <div style="margin: 12px 0 4px;"><span class="price-big">690€</span><span class="price-sub"> /an HT</span></div>
+        <p style="font-size:11px; color:var(--color-text-tertiary); margin-bottom:12px;">+ setup 199€ offert si paiement annuel</p>
+        <ul>
+          <li>Tout Essentiel +</li>
+          <li>Signalement incidents carte</li>
+          <li>Agenda & réservations</li>
+          <li>Messagerie mairie ↔ citoyen</li>
+          <li>Démarches en ligne simples</li>
+          <li>Statistiques usage</li>
+          <li>Support téléphone 24h</li>
+        </ul>
+        <div class="tag-row"><span class="badge blue">Marge optimale</span></div>
+      </div>
+      <div class="card">
+        <div class="tag-row"><span class="badge purple">Communauté</span></div>
+        <div style="margin: 12px 0 4px;"><span class="price-big">390€</span><span class="price-sub"> /commune/an</span></div>
+        <p style="font-size:11px; color:var(--color-text-tertiary); margin-bottom:12px;">Vendu à l'EPCI · minimum 5 communes</p>
+        <ul>
+          <li>Tout Pro +</li>
+          <li>Dashboard EPCI unifié</li>
+          <li>Partage d'alertes inter-communes</li>
+          <li>Branding EPCI + communes</li>
+          <li>Facturation unique EPCI</li>
+          <li>Onboarding accompagné</li>
+          <li>SLA 99.9% garanti</li>
+        </ul>
+        <div class="tag-row"><span class="badge purple">Volume</span></div>
+      </div>
+    </div>
+    <div class="card info-l">
+      <h4>La vraie astuce tarifaire : le seuil des marchés publics</h4>
+      <p>En France, les communes n'ont pas d'obligation de mise en concurrence pour les achats &lt; <strong>40 000€ HT</strong>. Votre prix est 60× en dessous. Mais le seuil psychologique est autour de <strong>500€</strong> pour éviter une délibération. Positionnez l'offre Essentielle à 490€ comme produit d'appel, et la montée en Pro comme évidence après 3 mois d'usage.</p>
+    </div>
+    <div class="card">
+      <h3>Structure de la facture recommandée</h3>
+      <table class="table" style="margin-top:8px;">
+        <thead><tr><th>Ligne</th><th>Montant HT</th><th>Obligatoire ?</th></tr></thead>
+        <tbody>
+          <tr><td>Licence annuelle plateforme</td><td>490€ ou 690€</td><td><span class="badge green">Oui</span></td></tr>
+          <tr><td>Frais de mise en service</td><td>199€ (offert si annuel)</td><td><span class="badge amber">Optionnel</span></td></tr>
+          <tr><td>Formation maire (1h visio)</td><td>99€ (offert si Pro)</td><td><span class="badge amber">Optionnel</span></td></tr>
+          <tr><td>Personnalisation logo/couleurs</td><td>149€ one-shot</td><td><span class="badge amber">Optionnel</span></td></tr>
+        </tbody>
+      </table>
+      <div class="callout">Chorus Pro : obligatoire pour les communes &gt; 5000 hab · pour vos cibles (&lt; 500 hab) non obligatoire mais recommandé d'émettre via Chorus Pro quand même pour le sérieux perçu.</div>
+    </div>
+  </div>
+
+  <!-- EPCI -->
+  <div id="s-epci" class="section">
+    <div class="highlight-box">
+      <h3>🏘️ L'EPCI : votre multiplicateur de croissance x20</h3>
+      <p>Une communauté de communes regroupe en moyenne 15–25 communes. Une seule signature EPCI = 15 à 25 clients d'un coup. La DGS de l'EPCI devient votre champion interne — elle convainc les maires à votre place.</p>
+    </div>
+    <div class="grid2">
+      <div class="card">
+        <h3>Pourquoi l'EPCI est une plus-value réelle</h3>
+        <div class="row" style="margin-top:10px;"><div class="icon-box green"><i class="ti ti-users" aria-hidden="true"></i></div><div><h4>Mutualisation des coûts</h4><p>L'EPCI paie pour toutes les communes membres · les petites communes &lt; 100 hab n'ont souvent aucun budget propre · l'EPCI est leur bouclier financier</p></div></div>
+        <div class="row"><div class="icon-box blue"><i class="ti ti-antenna" aria-hidden="true"></i></div><div><h4>Alertes inter-communes</h4><p>Inondation, alerte météo, coupure eau · notifier toutes les communes de l'EPCI en 1 clic · valeur ajoutée immédiate et perceptible</p></div></div>
+        <div class="row"><div class="icon-box purple"><i class="ti ti-chart-bar" aria-hidden="true"></i></div><div><h4>Tableau de bord EPCI</h4><p>Vision agrégée des signalements, démarches, participation citoyenne · rapport mensuel automatique pour la DGS</p></div></div>
+        <div class="row"><div class="icon-box teal"><i class="ti ti-file-invoice" aria-hidden="true"></i></div><div><h4>Facturation simplifiée</h4><p>Une seule facture pour 15–25 communes · un seul interlocuteur · renouvellement quasi-automatique</p></div></div>
+      </div>
+      <div class="card">
+        <h3>Pitch EPCI en 3 arguments</h3>
+        <div class="step" style="margin-top:10px;"><div class="step-num on">1</div><div><h4>Argument financier</h4><p>390€/commune/an vs 690€ en direct = économie de 300€ par commune · sur 20 communes : 6 000€ d'économie · l'EPCI fait une bonne affaire</p></div></div>
+        <div class="step"><div class="step-num on">2</div><div><h4>Argument opérationnel</h4><p>Un seul outil pour tout le territoire · les citoyens qui déménagent dans l'EPCI retrouvent la même app · cohérence territoriale</p></div></div>
+        <div class="step"><div class="step-num on">3</div><div><h4>Argument politique</h4><p>Le président de l'EPCI se positionne en modernisateur du territoire · argument fort pour les prochaines élections · visibilité médias locaux</p></div></div>
+        <div class="callout" style="margin-top:10px;">
+          <strong>Comment prospecter un EPCI :</strong> ciblez d'abord une commune "tête de pont" dans l'EPCI · une fois satisfaite, elle devient votre ambassadeur · la DGS de l'EPCI vous contacte d'elle-même.
+        </div>
+      </div>
+    </div>
+    <div class="card">
+      <h3>Exemple de deal EPCI (20 communes)</h3>
+      <table class="table" style="margin-top:8px;">
+        <thead><tr><th>Scénario</th><th>Nb communes</th><th>Prix/commune</th><th>ARR deal</th></tr></thead>
+        <tbody>
+          <tr><td>Communes individuelles</td><td>20</td><td>690€</td><td><strong>13 800€</strong></td></tr>
+          <tr><td>Pack EPCI</td><td>20</td><td>390€</td><td><strong>7 800€</strong></td></tr>
+          <tr><td>EPCI + licence coordination</td><td>20 + 1 EPCI</td><td>390€ + 1 200€</td><td><strong>9 000€</strong></td></tr>
+        </tbody>
+      </table>
+      <div class="callout">La licence EPCI coordination (1 200€/an) couvre le dashboard agrégé, les alertes inter-communes et le rapport mensuel. C'est votre upsell naturel.</div>
+    </div>
+  </div>
+
+  <!-- UX MAIRE RURAL -->
+  <div id="s-ux" class="section">
+    <div class="card warn-l" style="margin-bottom:14px;">
+      <h4>Contrainte n°1 : le maire rural n'a pas de DSI. Il a son pouce.</h4>
+      <p>L'onboarding doit fonctionner sur un smartphone Android d'entrée de gamme, en 10 minutes, sans aucune aide. Si ça coince une fois, il abandonne et vous fait une mauvaise réputation au marché des maires.</p>
+    </div>
+    <div class="grid2">
+      <div class="card">
+        <h3>Backoffice maire : les 5 écrans max</h3>
+        <div class="step" style="margin-top:10px;"><div class="step-num on">1</div><div><h4>Publier une info</h4><p>Titre + texte + photo optionnelle + bouton "Envoyer à tous" · comme Facebook mais pour sa commune</p></div></div>
+        <div class="step"><div class="step-num on">2</div><div><h4>Envoyer une alerte</h4><p>3 catégories max : Info / Urgent / Événement · push notification automatique</p></div></div>
+        <div class="step"><div class="step-num on">3</div><div><h4>Voir les signalements</h4><p>Liste photo + localisation + statut · bouton "Résolu" · réponse en 1 tap</p></div></div>
+        <div class="step"><div class="step-num on">4</div><div><h4>Gérer les inscrits</h4><p>Nombre de citoyens inscrits · exports CSV · invitation par lien partageable</p></div></div>
+        <div class="step"><div class="step-num on">5</div><div><h4>Paiement & compte</h4><p>Renouvellement licence · facture PDF · coordonnées mairie</p></div></div>
+      </div>
+      <div class="card">
+        <h3>Onboarding zéro-friction (objectif : &lt; 10 min)</h3>
+        <div class="step" style="margin-top:10px;"><div class="step-num on">1</div><div><h4>Lien unique personnalisé</h4><p>civitas.app/mairie-nomscommune · pré-rempli avec données INSEE · le maire arrive sur "votre commune est prête"</p></div></div>
+        <div class="step"><div class="step-num on">2</div><div><h4>3 infos seulement</h4><p>Email · numéro de téléphone mairie · logo ou couleur préférée · tout le reste est pré-configuré</p></div></div>
+        <div class="step"><div class="step-num on">3</div><div><h4>Paiement Stripe en 1 clic</h4><p>Lien Stripe Payment Link · carte ou virement SEPA · facture automatique</p></div></div>
+        <div class="step"><div class="step-num on">4</div><div><h4>App active immédiatement</h4><p>SMS + email avec lien de partage citoyens · "Envoyez ce lien à vos habitants"</p></div></div>
+        <div class="callout" style="margin-top:6px;">
+          Vidéo démo de 90 secondes sur la page d'onboarding. Pas de manuel PDF. Pas de formation obligatoire.
+        </div>
+      </div>
+    </div>
+    <div class="card green-l">
+      <h4>Astuce rétention : le "premier succès" en 24h</h4>
+      <p>Dès que le maire publie son premier message et que 5 citoyens s'inscrivent, il est "accro". Déclenchez automatiquement un email félicitation avec les stats : "3 citoyens ont déjà téléchargé votre app !" — ça ancre la valeur émotionnellement avant même la fin du mois d'essai.</p>
+    </div>
+  </div>
+
+  <!-- SIMULATEUR ARR -->
+  <div id="s-simu" class="section">
+    <h3 style="margin-bottom:14px;">Simulateur de revenus annuels</h3>
+    <div class="card" style="margin-bottom:14px;">
+      <div class="sim-row">
+        <span class="sim-label">Communes individuelles (690€)</span>
+        <input type="range" min="0" max="200" value="30" id="r1" oninput="calc()" style="flex:1;">
+        <span class="sim-val" id="v1">30</span>
+      </div>
+      <div class="sim-row">
+        <span class="sim-label">Packs EPCI (390€ × nb communes)</span>
+        <input type="range" min="0" max="20" value="3" id="r2" oninput="calc()" style="flex:1;">
+        <span class="sim-val" id="v2">3 EPCI</span>
+      </div>
+      <div class="sim-row">
+        <span class="sim-label">Communes/EPCI en moyenne</span>
+        <input type="range" min="5" max="30" value="15" id="r3" oninput="calc()" style="flex:1;">
+        <span class="sim-val" id="v3">15</span>
+      </div>
+      <div class="sim-row">
+        <span class="sim-label">Licences EPCI coordination (1200€)</span>
+        <input type="range" min="0" max="20" value="3" id="r4" oninput="calc()" style="flex:1;">
+        <span class="sim-val" id="v4">3</span>
+      </div>
+    </div>
+    <div class="grid3" id="res">
+      <div class="metric"><div class="label">ARR communes directes</div><div class="value" id="arr1">20 700€</div></div>
+      <div class="metric"><div class="label">ARR packs EPCI</div><div class="value" id="arr2">17 550€</div></div>
+      <div class="metric"><div class="label">ARR licences EPCI</div><div class="value" id="arr3">3 600€</div></div>
+    </div>
+    <div style="background:#E1F5EE; border-radius:var(--border-radius-lg); padding:16px; margin-top:4px; display:flex; justify-content:space-between; align-items:center;">
+      <div>
+        <div style="font-size:12px; color:#0F6E56; margin-bottom:4px;">ARR total estimé</div>
+        <div style="font-size:32px; font-weight:500; color:#085041;" id="arrTotal">41 850€</div>
+      </div>
+      <div style="text-align:right;">
+        <div style="font-size:12px; color:#0F6E56; margin-bottom:4px;">Total communes actives</div>
+        <div style="font-size:24px; font-weight:500; color:#085041;" id="totalC">75</div>
+        <div style="font-size:11px; color:#1D9E75;">sur 26 000 disponibles</div>
+      </div>
+    </div>
+    <div class="callout" style="margin-top:12px;">
+      <strong>Marge brute estimée &gt; 80%</strong> — vos coûts variables sont quasi-nuls par commune additionnelle (Supabase, Cloudflare, emails). Le coût marginal d'une nouvelle commune ≈ 2–5€/an.
+    </div>
+  </div>
+</div>
+
+<script>
+function show(id) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('s-' + id).classList.add('active');
+  event.currentTarget.classList.add('active');
+}
+function fmt(n) { return n.toLocaleString('fr-FR') + '€'; }
+function calc() {
+  const r1 = +document.getElementById('r1').value;
+  const r2 = +document.getElementById('r2').value;
+  const r3 = +document.getElementById('r3').value;
+  const r4 = +document.getElementById('r4').value;
+  document.getElementById('v1').textContent = r1;
+  document.getElementById('v2').textContent = r2 + ' EPCI';
+  document.getElementById('v3').textContent = r3;
+  document.getElementById('v4').textContent = r4;
+  const a1 = r1 * 690;
+  const a2 = r2 * r3 * 390;
+  const a3 = r4 * 1200;
+  const total = a1 + a2 + a3;
+  const totalComm = r1 + r2 * r3;
+  document.getElementById('arr1').textContent = fmt(a1);
+  document.getElementById('arr2').textContent = fmt(a2);
+  document.getElementById('arr3').textContent = fmt(a3);
+  document.getElementById('arrTotal').textContent = fmt(total);
+  document.getElementById('totalC').textContent = totalComm;
+}
+calc();
+</script>
